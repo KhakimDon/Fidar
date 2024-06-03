@@ -38,7 +38,16 @@
                             <div class="flex justify-center">
                                 <img class="imagelogo" src="../assets/logoke.png" alt="image">
                             </div>
-                            <p class="py-4">Pree button below to close</p>
+
+                            <p class="py-2">Камеры:</p>
+                            <div class="flex flex-col gap-[7px] pb-[50px]">
+                                <div class="min-h-[90px] rounded-[5px] w-[100%] border-b-[4px] border-[1px] border-[#01BAF1] overflow-hidden flex gap-[15px] items-center px-[10px]"
+                                    v-for="item of this.useProductsStore.cameras" :key="item.id">
+                                    <img class="goodsitemimg" :src="item.img" alt="image">
+                                    <p class="font-[600]">{{ item.title }}</p>
+                                </div>
+                            </div>
+
                             <div class="modal-action absolute top-[15px] left-[20px]">
                                 <form method="dialog">
                                     <!-- if there is a button in form, it will close the modal -->
@@ -66,13 +75,31 @@
                     </div>
 
                     <dialog id="my_modal_1" class="modal">
-                        <div class="modal-box">
-                            <h3 class="font-bold text-lg">Hello!</h3>
-                            <p class="py-4">Press ESC key or click the button below to close</p>
-                            <div class="modal-action">
+                        <div class="modal-box w-[100%] pt-[0px] rounded-[0] h-[100vh] top-0 m-0 mt-0">
+                            <div class="flex justify-center">
+                                <img class="imagelogo" src="../assets/logoke.png" alt="image">
+                            </div>
+
+                            <p class="py-2">Камеры:</p>
+                            <div class="flex flex-col gap-[7px] pb-[50px]">
+                                <div class="min-h-[90px] rounded-[5px] w-[100%] border-b-[4px] border-[1px] border-[#01BAF1] overflow-hidden flex gap-[15px] items-center px-[10px]"
+                                    v-for="item of this.useProductsStore.switches" :key="item.id">
+                                    <img class="goodsitemimg" :src="item.img" alt="image">
+                                    <p class="font-[600]">{{ item.title }}</p>
+                                </div>
+                            </div>
+
+                            <div class="modal-action absolute top-[15px] left-[20px]">
                                 <form method="dialog">
                                     <!-- if there is a button in form, it will close the modal -->
-                                    <button class="btn">Close</button>
+                                    <button class="outline-none text-[40px]">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                            stroke-width="1.5" stroke="currentColor" class="size-6 text-[gray]">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+                                        </svg>
+
+                                    </button>
                                 </form>
                             </div>
                         </div>
@@ -122,6 +149,7 @@ import { Pagination } from 'swiper/modules';
 import { ref } from 'vue';
 import FirstScreen from './FirstScreen.vue';
 import AboutUs from './AboutUs.vue';
+import { useProductsStore } from "../stores/products"
 
 export default {
     components: {
@@ -156,6 +184,7 @@ export default {
     data() {
         return {
             useCounterStore: useCounterStore(),
+            useProductsStore: useProductsStore()
         }
     },
     setup() {
@@ -168,6 +197,10 @@ export default {
 </script>
 
 <style>
+.goodsitemimg{ 
+    height: 80px !important;
+    width: initial !important; 
+}
 .gallery {
     max-width: 90%;
     margin: auto;

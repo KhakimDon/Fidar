@@ -307,7 +307,7 @@ export const useProductsStore = defineStore("useProducts", () => {
     },
     {
       id: 13,
-      img: "./5jpg",
+      img: "./5.jpg",
       title: "4mp FIB-S1085k334 4mp",
       options: [
         "PELASTIC DOME CAMERA",
