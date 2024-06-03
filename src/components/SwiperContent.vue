@@ -4,7 +4,7 @@
     }" :modules="modules" class="mySwiper swip">
 
         <swiper-slide @click="handleClick" id="1">
-            <FirstScreen />
+            <FirstScreen @about="about()" @prod="prod()" @gal="gal()" />
         </swiper-slide>
 
         <swiper-slide @click="handleClick" id="2">
@@ -14,7 +14,7 @@
         <swiper-slide @click="handleClick" id="3">
             <div class="max-w-[80%] pt-[20px] text-justify text-[14px] w-[100%] h-[100%] flex items-center flex-col">
                 <h1 class="text-[27px] font-[600] mb-[10px]">О нас</h1>
-                <video class="w-[100%]" controls src="/video.mp4"></video>
+                <video class="w-[100%] mt-[10px]" controls src="/video.mp4"></video>
             </div>
         </swiper-slide>
 
@@ -39,13 +39,53 @@
                                 <img class="imagelogo" src="../assets/logoke.png" alt="image">
                             </div>
 
-                            <p class="py-2">Камеры:</p>
+                            <p class="py-2">Свитчеры:</p>
                             <div class="flex flex-col gap-[7px] pb-[50px]">
-                                <div class="min-h-[90px] rounded-[5px] w-[100%] border-b-[4px] border-[1px] border-[#01BAF1] overflow-hidden flex gap-[15px] items-center px-[10px]"
-                                    v-for="item of this.useProductsStore.cameras" :key="item.id">
+                                <label :for="`my_modal_` + index + 1000"
+                                    class="min-h-[90px] rounded-[5px] w-[100%] border-b-[4px] border-[1px] border-[#01BAF1] overflow-hidden flex gap-[15px] items-center px-[10px]"
+                                    v-for="(item, index) of this.useProductsStore.cameras" :key="item.id">
                                     <img class="goodsitemimg" :src="item.img" alt="image">
                                     <p class="font-[600]">{{ item.title }}</p>
-                                </div>
+
+                                    <!--  -->
+                                    <input type="checkbox" :id="`my_modal_` + index + 1000"
+                                        class="modal-toggle modal modalmode" />
+                                    <div class="modal modalmode" role="dialog">
+                                        <div class="modal-box pt-[0] max-h-[80vh]">
+                                            <div class="flex justify-center">
+                                                <img class="imagelogos" src="../assets/logoke.png" alt="image">
+
+                                                <label :for="`my_modal_` + index + 1000"
+                                                    class="absolute left-[20px] top-[25px]">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                                        class="size-6">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+                                                    </svg>
+                                                </label>
+
+
+                                            </div>
+                                            <hr class="mb-[10px]">
+                                            <div class="max-h-[500px] overflow-y-auto">
+                                                <h3 class="font-bold text-lg text-center">{{ item.title }}</h3>
+
+                                                <img class="max-w-[100%]" :src="item.img" alt="image">
+
+                                                <p class="font-[1000]">Характеристики:</p>
+                                                <ul>
+                                                    <li class="text-left border-b py-[5px]" v-for="i of item.options"
+                                                        :key="i.id">
+                                                        - {{ i }}
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--  -->
+
+                                </label>
                             </div>
 
                             <div class="modal-action absolute top-[15px] left-[20px]">
@@ -82,11 +122,51 @@
 
                             <p class="py-2">Камеры:</p>
                             <div class="flex flex-col gap-[7px] pb-[50px]">
-                                <div class="min-h-[90px] rounded-[5px] w-[100%] border-b-[4px] border-[1px] border-[#01BAF1] overflow-hidden flex gap-[15px] items-center px-[10px]"
-                                    v-for="item of this.useProductsStore.switches" :key="item.id">
+                                <label :for="`my_modal_` + index + 100"
+                                    class="min-h-[90px] rounded-[5px] w-[100%] border-b-[4px] border-[1px] border-[#01BAF1] overflow-hidden flex gap-[15px] items-center px-[10px]"
+                                    v-for="(item, index) of this.useProductsStore.switches" :key="item.id">
                                     <img class="goodsitemimg" :src="item.img" alt="image">
                                     <p class="font-[600]">{{ item.title }}</p>
-                                </div>
+
+                                    <!--  -->
+                                    <input type="checkbox" :id="`my_modal_` + index + 100"
+                                        class="modal-toggle modal modalmode" />
+                                    <div class="modal modalmode" role="dialog">
+                                        <div class="modal-box pt-[0] max-h-[80vh]">
+                                            <div class="flex justify-center">
+                                                <img class="imagelogos" src="../assets/logoke.png" alt="image">
+
+                                                <label :for="`my_modal_` + index + 100"
+                                                    class="absolute left-[20px] top-[25px]">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                                        class="size-6">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+                                                    </svg>
+                                                </label>
+
+
+                                            </div>
+                                            <hr class="mb-[10px]">
+                                            <div class="max-h-[500px] overflow-y-auto">
+                                                <h3 class="font-bold text-lg text-center">{{ item.title }}</h3>
+
+                                                <img class="max-w-[100%]" :src="item.img" alt="image">
+
+                                                <p class="font-[1000]">Характеристики:</p>
+                                                <ul>
+                                                    <li class="text-left border-b py-[5px]" v-for="i of item.options"
+                                                        :key="i.id">
+                                                        - {{ i }}
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--  -->
+
+                                </label>
                             </div>
 
                             <div class="modal-action absolute top-[15px] left-[20px]">
@@ -180,6 +260,15 @@ export default {
             document.querySelector("#network").dispatchEvent(clickEvent);
             // console.log(document.querySelector("#network").click());
         },
+        about(){
+            console.log(document.querySelector(".swip").swiper.slideTo(1));
+        },
+        prod(){
+            console.log(document.querySelector(".swip").swiper.slideTo(3));
+        },
+        gal(){
+            console.log(document.querySelector(".swip").swiper.slideTo(4));
+        },
     },
     data() {
         return {
@@ -197,10 +286,17 @@ export default {
 </script>
 
 <style>
-.goodsitemimg{ 
-    height: 80px !important;
-    width: initial !important; 
+.modalmode {
+    top: 0 !important;
+    position: fixed !important;
+
 }
+
+.goodsitemimg {
+    height: 80px !important;
+    width: initial !important;
+}
+
 .gallery {
     max-width: 90%;
     margin: auto;
@@ -215,6 +311,11 @@ export default {
 
 .imagelogo {
     height: 90px !important;
+    width: initial !important;
+}
+
+.imagelogos {
+    height: 70px !important;
     width: initial !important;
 }
 

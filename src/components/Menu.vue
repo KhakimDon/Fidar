@@ -29,7 +29,7 @@ function pageActiveFunc(){
 
 <template>
     <div
-        class="h-[60px] z-[999] w-[100%] flex justify-around items-center bg-[#01BAF1] shadow-menu fixed bottom-0 left-0">
+        class="h-[60px] z-[999] w-[100%] flex justify-around items-center max-w-[950px] left-[50%] translate-x-[-50%] bg-[#01BAF1] shadow-menu fixed bottom-0">
         <div class="h-[40px] w-[40px] flex items-center justify-center">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3"
                 stroke="currentColor" class="size-6 text-white">
