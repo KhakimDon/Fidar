@@ -2,6 +2,6 @@
 </script>
 
 <template>
-  <main>
+  <main class="z-[100]">
   </main>
 </template>
