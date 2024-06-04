@@ -13,23 +13,24 @@
 
         <swiper-slide @click="handleClick" id="3">
             <div class="max-w-[80%] pt-[20px] text-justify text-[14px] w-[100%] h-[100%] flex items-center flex-col">
-                <h1 class="text-[27px] font-[600] mb-[10px]">О нас</h1>
-                <video class="w-[100%] mt-[10px]" controls src="/video.mp4"></video>
+                <h1 class="text-[27px] font-[600] mb-[10px]">{{ $t("aboutBtn") }}</h1>
+                <video class="sm:h-[800px] sm:w-[initial] w-[100%] mt-[10px]" controls src="/video.mp4"></video>
             </div>
         </swiper-slide>
 
         <swiper-slide @click="handleClick" id="4">
             <div
                 class="max-w-[85%] pt-[20px] text-justify text-[14px] w-[100%] h-[100%] flex items-center justify-start flex-col pl-[30px]">
-                <h1 class="text-[27px] font-[600] mb-[10px]">Продукты</h1>
+                <h1 class="text-[27px] font-[600] mb-[10px]">{{ $t("products") }}</h1>
 
                 <div>
                     <div onclick="my_modal_2.showModal()">
-                        <div class="border-[1px] mt-[50px] bg-[#01BAF1] my-[20px] rounded-[10px] overflow-hidden">
+                        <div
+                            class="border-[1px] mt-[50px] bg-[#01BAF1] my-[20px] rounded-[10px] overflow-hidden sm:h-[290px] sm:my-[10px] sm:w-[60%] sm:mx-auto">
                             <div>
-                                <img src="../assets/Frame1.png" alt="image">
+                                <img class="smkamera" src="../assets/Frame1.png" alt="image">
                             </div>
-                            <p class="p-[10px] text-white font-[600] text-[18px]">Камеры</p>
+                            <p class="p-[10px] text-white font-[600] text-[18px]">{{ $t("cameras") }}</p>
                         </div>
                     </div>
 
@@ -39,7 +40,6 @@
                                 <img class="imagelogo" src="../assets/logoke.png" alt="image">
                             </div>
 
-                            <p class="py-2">Свитчеры:</p>
                             <div class="flex flex-col gap-[7px] pb-[50px]">
                                 <label :for="`my_modal_` + index + 1000"
                                     class="min-h-[90px] rounded-[5px] w-[100%] border-b-[4px] border-[1px] border-[#01BAF1] overflow-hidden flex gap-[15px] items-center px-[10px]"
@@ -73,9 +73,9 @@
 
                                                 <img class="max-w-[100%]" :src="item.img" alt="image">
 
-                                                <p class="font-[1000]">Характеристики:</p>
+                                                <p class="font-[1000]">{{ $t("characters") }}:</p>
                                                 <ul>
-                                                    <li class="text-left border-b py-[5px]" v-for="i of item.options"
+                                                    <li class="text-left border-b py-[5px]" v-for="i of item[$t('p')]"
                                                         :key="i.id">
                                                         - {{ i }}
                                                     </li>
@@ -106,11 +106,12 @@
 
 
                     <div onclick="my_modal_1.showModal()">
-                        <div class="border-[1px] bg-[#01BAF1] my-[50px] rounded-[10px] overflow-hidden">
+                        <div
+                            class="border-[1px] sm:w-[60%] sm:h-[375px] sm:mx-auto bg-[#01BAF1] my-[50px] rounded-[10px] overflow-hidden">
                             <div>
-                                <img src="../assets/Frame2.png" alt="image">
+                                <img class="smkamera" src="../assets/Frame2.png" alt="image">
                             </div>
-                            <p class="p-[10px] text-white font-[600] text-[18px]">XVR и NVR</p>
+                            <p class="p-[10px] text-white font-[600] text-[18px]">{{ $t("xvrnvr") }}</p>
                         </div>
                     </div>
 
@@ -120,7 +121,6 @@
                                 <img class="imagelogo" src="../assets/logoke.png" alt="image">
                             </div>
 
-                            <p class="py-2">Камеры:</p>
                             <div class="flex flex-col gap-[7px] pb-[50px]">
                                 <label :for="`my_modal_` + index + 100"
                                     class="min-h-[90px] rounded-[5px] w-[100%] border-b-[4px] border-[1px] border-[#01BAF1] overflow-hidden flex gap-[15px] items-center px-[10px]"
@@ -154,9 +154,9 @@
 
                                                 <img class="max-w-[100%]" :src="item.img" alt="image">
 
-                                                <p class="font-[1000]">Характеристики:</p>
+                                                <p class="font-[1000]">{{ $t("characters") }}:</p>
                                                 <ul>
-                                                    <li class="text-left border-b py-[5px]" v-for="i of item.options"
+                                                    <li class="text-left border-b py-[5px]" v-for="i of item[$t('p')]"
                                                         :key="i.id">
                                                         - {{ i }}
                                                     </li>
@@ -184,29 +184,24 @@
                             </div>
                         </div>
                     </dialog>
-
-
                 </div>
-
-
-
             </div>
         </swiper-slide>
 
         <swiper-slide @click="handleClick" class="flex flex-col pt-[20px]" id="4">
-            <h1 class="text-[27px] font-[600] mb-[10px]">Галерея</h1>
-            <div class="gallery">
-                <img class="w-[100%] max-h-[200px] mb-[10px]"
+            <h1 class="text-[27px] font-[600] mb-[10px]">{{ $t("gallery") }}</h1>
+            <div class="gallery flex flex-col items-center">
+                <img class="w-[100%] max-h-[200px] sm:max-w-[80%] sm:max-h-[300px] mb-[10px]"
                     src="https://fidarnetwork.shop/wp-content/uploads/2023/07/999-1024x576.jpg" alt="img">
-                <img class="w-[100%] max-h-[200px] mb-[10px]"
+                <img class="w-[100%] max-h-[200px] sm:max-w-[80%] sm:max-h-[300px] mb-[10px]"
                     src="https://fidarnetwork.shop/wp-content/uploads/2023/07/999-1024x576.jpg" alt="img">
-                <img class="w-[100%] max-h-[200px] mb-[10px]"
+                <img class="w-[100%] max-h-[200px] sm:max-w-[80%] sm:max-h-[300px] mb-[10px]"
                     src="https://fidarnetwork.shop/wp-content/uploads/2023/07/999-1024x576.jpg" alt="img">
-                <img class="w-[100%] max-h-[200px] mb-[10px]"
+                <img class="w-[100%] max-h-[200px] sm:max-w-[80%] sm:max-h-[300px] mb-[10px]"
                     src="https://fidarnetwork.shop/wp-content/uploads/2023/07/999-1024x576.jpg" alt="img">
-                <img class="w-[100%] max-h-[200px] mb-[10px]"
+                <img class="w-[100%] max-h-[200px] sm:max-w-[80%] sm:max-h-[300px] mb-[10px]"
                     src="https://fidarnetwork.shop/wp-content/uploads/2023/07/999-1024x576.jpg" alt="img">
-                <img class="w-[100%] max-h-[200px] mb-[10px]"
+                <img class="w-[100%] max-h-[200px] sm:max-w-[80%] sm:max-h-[300px] mb-[10px]"
                     src="https://fidarnetwork.shop/wp-content/uploads/2023/07/999-1024x576.jpg" alt="img">
             </div>
         </swiper-slide>
@@ -260,13 +255,13 @@ export default {
             document.querySelector("#network").dispatchEvent(clickEvent);
             // console.log(document.querySelector("#network").click());
         },
-        about(){
+        about() {
             console.log(document.querySelector(".swip").swiper.slideTo(1));
         },
-        prod(){
+        prod() {
             console.log(document.querySelector(".swip").swiper.slideTo(3));
         },
-        gal(){
+        gal() {
             console.log(document.querySelector(".swip").swiper.slideTo(4));
         },
     },
@@ -338,5 +333,15 @@ export default {
 .swiper-pagination {
     background: red !important;
     display: none !important;
+}
+
+@media screen and (min-width: 600px) {
+    .gallery {
+        max-width: 65% !important;
+        width: 100% !important;
+        margin: auto;
+        height: calc(100vh - 100px);
+        overflow-y: auto;
+    }
 }
 </style>

@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import {useCounterStore} from "../stores/counter"
+import { useCounterStore } from "../stores/counter"
+
+import { useProductsStore } from '../stores/products'
 
 
 const pageActive = ref(false)
@@ -8,46 +10,82 @@ const page = ref(1)
 const counterStore = useCounterStore()
 const newPage = ref()
 
-function changePage(){
+const use = useProductsStore()
+const value = ref('')
+
+const watch = ref([])
+
+
+function input(){
+    watch.value = []
+    const all = use.cameras.concat(use.switches)
+    for(let i of all){
+        if(i.title[value.value.length - 1] == value.value){
+            watch.value.push(i)
+        }
+        
+    }
     
-    // newPage
-    if(newPage.value > 0 && newPage.value < 6){
+}
+
+function changePage() {
+    if (newPage.value > 0 && newPage.value < 6) {
         counterStore.realindex = newPage.value
         console.log(document.querySelector(".swip").swiper.slideTo(newPage.value - 1));
-        
-    }else{
+
+    }
+    else {
         newPage.value = null
     }
     pageActive.value = !pageActive.value
-
 }
-function pageActiveFunc(){
+
+function pageActiveFunc() {
     pageActive.value = !pageActive.value
 }
-
 </script>
 
 <template>
     <div
         class="h-[60px] z-[999] w-[100%] flex justify-around items-center max-w-[950px] left-[50%] translate-x-[-50%] bg-[#01BAF1] shadow-menu fixed bottom-0">
-        <div class="h-[40px] w-[40px] flex items-center justify-center">
+        <div onclick="my_modal_1754.showModal()" class="h-[40px] w-[40px] flex items-center justify-center">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3"
                 stroke="currentColor" class="size-6 text-white">
                 <path stroke-linecap="round" stroke-linejoin="round"
                     d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
             </svg>
         </div>
+        <dialog id="my_modal_1754" class="modal">
+            <div class="modal-box h-[90vh]">
+                <h3 class="font-bold text-lg">{{ $t("poisk") }}</h3>
+                <input @input="input" v-model="value" type="text" placeholder="4mp5mp FIB-S10..." class="border outline-none px-[10px] h-[40px] rounded-[10px] w-[100%] mt-[20px]">
+                <div class="h-[60vh] mt-[20px] border-b-[2px] overflow-y-scroll">
+                    <div class="h-[85px] w-[98%] gap-[10px] rounded-[12px] overflow-hidden flex items-center px-[10px] border mb-[10px]" v-for="i of watch" :key="i.id">
+                        <img class="w-[initial] h-[70px]" :src="i.img" alt="image">
+                        <span class="text-[13px]">{{ i.title }}</span>
+                    </div>
+                </div>
+                <div class="modal-action">
+                    <form method="dialog">
+                        <!-- if there is a button in form, it will close the modal -->
+                        <button class="btn">{{ $t("close") }}</button>
+                    </form>
+                </div>
+            </div>
+        </dialog>
 
-        <div class="cursor-pointer overflow-hidden h-[35px] w-[60px] flex items-center rounded-[7px] bg-white justify-center">
+        <div
+            class="cursor-pointer overflow-hidden h-[35px] w-[60px] flex items-center rounded-[7px] bg-white justify-center">
 
-            <span @click="pageActiveFunc()" v-if="!pageActive" class="text-[#01BAF1]">{{ counterStore.realindex }}/5</span>
+            <span @click="pageActiveFunc()" v-if="!pageActive" class="text-[#01BAF1]">{{ counterStore.realindex
+                }}/5</span>
 
             <form v-else @submit.prevent="changePage()" action="#">
                 <input v-model="newPage" autofocus class="w-[100%] outline-none text-center h-[100%]" type="number">
             </form>
         </div>
 
-        <div class="h-[40px] w-[40px] flex justify-center items-center">
+        <div onclick="my_modal_99.showModal()" class="h-[40px] w-[40px] flex justify-center items-center">
             <svg class="h-[45px] w-[45px]" viewBox="0 -0.5 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" clip-rule="evenodd"
                     d="M14.5 11.5C14.5 12.6046 13.6046 13.5 12.5 13.5C11.3954 13.5 10.5 12.6046 10.5 11.5C10.5 10.3954 11.3954 9.5 12.5 9.5C13.6046 9.5 14.5 10.3954 14.5 11.5Z"
@@ -57,6 +95,23 @@ function pageActiveFunc(){
                     fill="white" />
             </svg>
         </div>
+
+        <dialog id="my_modal_99" class="modal">
+            <div class="modal-box">
+                <h3 class="font-bold text-lg">{{ $t("contact") }}</h3>
+                <p class="border-b my-[10px] outline-none pb-[5px] block">{{ $t("address") }}</p>
+                <a class="border-b my-[10px] outline-none pb-[5px] block" href="tel:+998773008060">{{ $t("tel") }}</a>
+                <a class="border-b my-[10px] outline-none pb-[5px] block" href="tel:+998773008060">{{ $t("wha") }}</a>
+                <a class="my-[10px] outline-none pb-[5px] block" href="https://t.me/visto_manager">{{ $t("teleg") }}</a>
+                <div class="modal-action">
+                    <form method="dialog">
+                        <!-- if there is a button in form, it will close the modal -->
+                        <button class="btn">{{ $t("close") }}</button>
+                    </form>
+                </div>
+            </div>
+        </dialog>
+
     </div>
 </template>
 

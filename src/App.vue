@@ -33,7 +33,7 @@ export default defineComponent({
 
 <template>
   <div>
-    <Preloader v-if="!this.loading"/>
+    <Preloader v-if="this.loading"/>
     <Navbar class="z-[2]" />
     <div class="h-[90%] z-[99] absolute w-[100%] max-w-[1200px] left-[50%] translate-x-[-50%]">
       <SwiperContent />
