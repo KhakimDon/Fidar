@@ -133,6 +133,15 @@ function fallbackCopyLink() {
                             {{ $t("en") }}
                     </button>
                 </form>
+                <form method="dialog">
+                    <button @click="$i18n.locale = 'pr'"
+                        class="bg-[#1c8fdb] flex items-center gap-[10px] px-[10px] py-[15px] rounded-[10px] font-[600] text-white mb-[10px] w-[100%] text-left">
+                        <img class="h-[30px] max-w-[45px]"
+                            src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Flag_of_Iran.svg/160px-Flag_of_Iran.svg.png"
+                            alt="image">
+                            {{ $t("pr") }}
+                    </button>
+                </form>
                 </div>
 
                 <div :class="{ activealert: activealert }" role="alert"

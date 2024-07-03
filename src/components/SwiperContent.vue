@@ -13,7 +13,7 @@
 
         <swiper-slide @click="handleClick" id="3">
             <div class="max-w-[80%] pt-[20px] text-justify text-[14px] w-[100%] h-[100%] flex items-center flex-col">
-                <h1 class="text-[27px] font-[600] mb-[10px]">{{ $t("aboutBtn") }}</h1>
+                <h1 class="text-[27px] font-[600] mb-[10px]">{{ $t("video") }}</h1>
                 <video class="sm:h-[800px] sm:w-[initial] w-[100%] mt-[10px]" controls src="/video.mp4"></video>
             </div>
         </swiper-slide>
@@ -191,18 +191,8 @@
         <swiper-slide @click="handleClick" class="flex flex-col pt-[20px]" id="4">
             <h1 class="text-[27px] font-[600] mb-[10px]">{{ $t("gallery") }}</h1>
             <div class="gallery flex flex-col items-center">
-                <img class="w-[100%] max-h-[200px] sm:max-w-[80%] sm:max-h-[300px] mb-[10px]"
-                    src="https://fidarnetwork.shop/wp-content/uploads/2023/07/999-1024x576.jpg" alt="img">
-                <img class="w-[100%] max-h-[200px] sm:max-w-[80%] sm:max-h-[300px] mb-[10px]"
-                    src="https://fidarnetwork.shop/wp-content/uploads/2023/07/999-1024x576.jpg" alt="img">
-                <img class="w-[100%] max-h-[200px] sm:max-w-[80%] sm:max-h-[300px] mb-[10px]"
-                    src="https://fidarnetwork.shop/wp-content/uploads/2023/07/999-1024x576.jpg" alt="img">
-                <img class="w-[100%] max-h-[200px] sm:max-w-[80%] sm:max-h-[300px] mb-[10px]"
-                    src="https://fidarnetwork.shop/wp-content/uploads/2023/07/999-1024x576.jpg" alt="img">
-                <img class="w-[100%] max-h-[200px] sm:max-w-[80%] sm:max-h-[300px] mb-[10px]"
-                    src="https://fidarnetwork.shop/wp-content/uploads/2023/07/999-1024x576.jpg" alt="img">
-                <img class="w-[100%] max-h-[200px] sm:max-w-[80%] sm:max-h-[300px] mb-[10px]"
-                    src="https://fidarnetwork.shop/wp-content/uploads/2023/07/999-1024x576.jpg" alt="img">
+                <img v-for="item of this.gallery" :key="item.id" class="w-[100%] max-h-[200px] sm:max-w-[80%] sm:max-h-[300px] mb-[10px]"
+                    :src="item" alt="img">
             </div>
         </swiper-slide>
 
@@ -225,6 +215,9 @@ import { ref } from 'vue';
 import FirstScreen from './FirstScreen.vue';
 import AboutUs from './AboutUs.vue';
 import { useProductsStore } from "../stores/products"
+import { query, collection, getDocs, orderBy, updateDoc, doc, setDoc } from "firebase/firestore";
+import { db } from "../firebase.ts"
+import {useLangStore} from '../stores/lang'
 
 export default {
     components: {
@@ -233,7 +226,19 @@ export default {
         FirstScreen,
         AboutUs
     },
+    mounted(){
+        this.get()
+    },
     methods: {
+        async get() {
+            let a = ref([])
+            const q = query(collection(db, "fidar"))
+            const querySnap = await getDocs(q);
+            querySnap.forEach((doc) => {
+                a.value.push(doc.data())
+            })
+            this.gallery = a.value[1].gallery
+        },
         onSlideChange() {
             this.useCounterStore.realindex = document.querySelector(".swip").swiper.realIndex + 1
         },
@@ -268,7 +273,9 @@ export default {
     data() {
         return {
             useCounterStore: useCounterStore(),
-            useProductsStore: useProductsStore()
+            useProductsStore: useProductsStore(),
+            gallery: [],
+            useLangStore: useLangStore(),
         }
     },
     setup() {
