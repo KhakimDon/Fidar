@@ -9,13 +9,16 @@
       <div class="max-w-[1200px] mx-auto mt-[20px] flex gap-[40px] h-[100%]">
         <div class="w-[250px]  min-h-[400px] flex flex-col gap-[10px]">
           <button @click="event = 'about', AboutGet()" :class="{ active: event == 'about' }" class="btn w-[100%]">About
-            us / درباره
-            ما</button>
+            us 
+            </button>
           <button @click="event = 'gallery', galleryGet()" :class="{ active: event == 'gallery' }"
-            class="btn w-[100%]">Gallery /
-            آلبوم
-            عکس</button>
+            class="btn w-[100%]">Gallery </button>
+          <button @click="event = 'cameras', getcameras()" :class="{ active: event == 'cameras' }"
+            class="btn w-[100%]">Cameras </button>
+          <button @click="event = 'switches', getswitches()" :class="{ active: event == 'switches' }"
+            class="btn w-[100%]">switches</button>
         </div>
+
         <div class="min-h-[400px] flex-1">
 
           <div v-if="event == 'about'">
@@ -54,7 +57,8 @@
               </div>
             </div>
             <br>
-            <button @click="saveAbout(), event = ''" class="btn bg-[blue] border-[blue] text-white">SAVE</button>
+            <button @click="saveAbout()" class="btn bg-[blue] border-[blue] text-white">SAVE <span v-if="loader"
+                class="loading loading-spinner loading-xs"></span></button>
           </div>
 
           <div v-if="event == 'gallery'">
@@ -97,10 +101,266 @@
               </div>
             </div>
             <br>
-            <button @click="saveGallery(), event = ''" class="btn bg-[blue] border-[blue] text-white">SAVE</button>
+            <button @click="saveGallery(), event = ''" class="btn bg-[blue] border-[blue] text-white">SAVE <span
+                v-if="loader" class="loading loading-spinner loading-xs"></span></button>
+          </div>
+
+          <div v-if="event == 'cameras'">
+            <div class="h-[700px] overflow-y-scroll pb-[100px]">
+              <div class="border-b pb-[20px] pt-[10px]">
+                <h3 class="text-white font-[1000] text-[22px] mb-[10px]">Cameras</h3>
+
+
+                <div class="overflow-x-auto">
+                  <button onclick="my_modal_6969.showModal()" class="btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                      stroke="currentColor" class="size-6">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                    </svg>
+                  </button>
+
+                  <dialog id="my_modal_6969" class="modal">
+                    <div class="modal-box h-[100vh] overflow-y-auto">
+                      <h3 class="text-[20px] font-bold">Add Camera</h3>
+                      <input v-model="newcameratitle_pr" placeholder="Persian title" class="input bg-[#ededed] w-[100%] mt-[20px]" type="text">
+                      <input v-model="newcameratitle_en" placeholder="English title" class="input bg-[#ededed] w-[100%] mt-[20px]" type="text">
+                      <input v-model="newcameratitle_ru" placeholder="Russian title" class="input bg-[#ededed] w-[100%] mt-[20px]" type="text">
+                      <input v-model="newcameratitle_uz" placeholder="Uzbek title" class="input bg-[#ededed] w-[100%] mt-[20px]" type="text">
+                      <hr class="h-[2px] bg-[gray] mt-[30px]">
+                      <input v-model="addImage" placeholder="Image URL" class="input bg-[#ededed] w-[100%] my-[10px]" type="text">
+                      <figure class="h-[100px] w-[100px] bg-[gray] mb-[10px]">
+                        <img class="h-[100%] w-[100%] object-cover" :src="addImage" alt="image">
+                      </figure>
+                      <hr class="h-[2px] bg-[gray]">
+                      <div class="flex justify-between items-center">
+                        <p class="mt-[10px] text-[20px] font-[600]">characteristics:</p>
+                      <button @click="newCameraCharacters.push('')" class="btn mt-[10px] bg-[lime]">Add Character</button>
+                      </div>
+
+                      <fieldset class="border p-[10px] mt-[20px]">
+                        <legend>Persian</legend>
+                        <input required v-for="item of newCameraCharacters" :key="item.id" placeholder="characteristics" class="titlepr input bg-[#ededed] w-[100%] my-[10px]" type="text">
+                      </fieldset>
+                      <fieldset class="border p-[10px] mt-[20px]">
+                        <legend>English</legend>
+                        <input required v-for="item of newCameraCharacters" :key="item.id" placeholder="characteristics" class="titleen input bg-[#ededed] w-[100%] my-[10px]" type="text">
+                      </fieldset>
+                      <fieldset class="border p-[10px] mt-[20px]">
+                        <legend>Russian</legend>
+                        <input required v-for="item of newCameraCharacters" :key="item.id" placeholder="characteristics" class="titleru input bg-[#ededed] w-[100%] my-[10px]" type="text">
+                      </fieldset>
+                      <fieldset class="border p-[10px] mt-[20px]">
+                        <legend>Uzbek</legend>
+                        <input required v-for="item of newCameraCharacters" :key="item.id" placeholder="characteristics" class="titleuz input bg-[#ededed] w-[100%] my-[10px]" type="text">
+                      </fieldset>
+                      <div class="modal-action">
+                        <form method="dialog">
+                          <!-- if there is a button in form, it will close the modal -->
+                          <button class="btn mr-[5px]">Close</button>
+                          <button @click="AddCamera()" class="btn btn-primary">Save</button>
+                        </form>
+                      </div>
+                    </div>
+                  </dialog>
+
+                  <table class="table">
+                    <!-- head -->
+                    <thead>
+                      <tr>
+
+                        <th>Name</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <!-- row 1 -->
+                      <tr v-for="item of cameras" :key="item.id">
+                        <td @click="eventProd = item" onclick="my_modal_11.showModal()" >
+                          <div class="flex items-center gap-3">
+                            <div class="avatar">
+                              <div class="mask mask-squircle h-12 w-12">
+                                <img :src="item.img" alt="Avatar Tailwind CSS Component" />
+                              </div>
+                            </div>
+                            <div>
+                              <div class="font-bold">{{ item.en }}</div>
+                            </div>
+                          </div>
+                        </td>
+                        <td><div @click="cameras.splice(cameras.indexOf(item),1)" class="btn bg-[red] pointer-events-auto text-white border-none">Del</div></td>
+                      </tr>
+                      <dialog id="my_modal_11" class="modal">
+                          <div class="modal-box h-[100vh] overflow-y-auto">
+                            <div class="modal-action">
+                              <form method="dialog">
+                                <!-- if there is a button in form, it will close the modal -->
+                                <button class="btn">Close</button>
+                              </form>
+                            </div>
+                            <h3 class="text-lg font-bold border-b"><span>Title in Persian:</span> <br> {{eventProd.pr}}</h3>
+                            <h3 class="text-lg font-bold border-b"><span>Title in English:</span> <br> {{eventProd.en}}</h3>
+                            <h3 class="text-lg font-bold border-b"><span>Title in Russian:</span> <br> {{eventProd.ru}}</h3>
+                            <h3 class="text-lg font-bold border-b">Title in Uzbek: <br> {{eventProd.uz}}</h3>
+                            <img :src="eventProd.img" alt="image">
+                            <p class="text-[20px] font-[1000] mb-[5px]">characters Persian:</p>
+                            <p v-for="item of eventProd.optionspr" :key="item.id">{{ item }}</p>
+                            <div class="h-[10px] bg-[gray] my-[10px]"></div>
+
+                            <p class="text-[20px] font-[1000] mb-[5px]">characters English:</p>
+                            <p v-for="item of eventProd.optionsen" :key="item.id">{{ item }}</p>
+                            <div class="h-[10px] bg-[gray] my-[10px]"></div>
+
+                            <p class="text-[20px] font-[1000] mb-[5px]">characters Russian:</p>
+                            <p v-for="item of eventProd.optionsru" :key="item.id">{{ item }}</p>
+                            <div class="h-[10px] bg-[gray] my-[10px]"></div>
+
+                            <p class="text-[20px] font-[1000] mb-[5px]">characters Uzbek:</p>
+                            <p v-for="item of eventProd.optionsuz" :key="item.id">{{ item }}</p>
+                            <div class="h-[10px] bg-[gray] my-[10px]"></div>
+                          </div>
+                        </dialog>
+
+                    </tbody>
+                  </table>
+                </div>
+
+
+              </div>
+            </div>
+            <br>
+            <button @click="savecameras(), event = ''" class="btn bg-[blue] border-[blue] text-white">SAVE <span
+                v-if="loader" class="loading loading-spinner loading-xs"></span></button>
+          </div>
+
+          <div v-if="event == 'switches'">
+            <div class="h-[700px] overflow-y-scroll pb-[100px]">
+              <div class="border-b pb-[20px] pt-[10px]">
+                <h3 class="text-white font-[1000] text-[22px] mb-[10px]">Switches</h3>
+
+
+                <div class="overflow-x-auto">
+                  <button onclick="my_modal_707070.showModal()" class="btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                      stroke="currentColor" class="size-6">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                    </svg>
+                  </button>
+
+                  <dialog id="my_modal_707070" class="modal">
+                    <div class="modal-box h-[100vh] overflow-y-auto">
+                      <h3 class="text-[20px] font-bold">Add Switch</h3>
+                      <input v-model="newcameratitle_pr" placeholder="Persian title" class="input bg-[#ededed] w-[100%] mt-[20px]" type="text">
+                      <input v-model="newcameratitle_en" placeholder="English title" class="input bg-[#ededed] w-[100%] mt-[20px]" type="text">
+                      <input v-model="newcameratitle_ru" placeholder="Russian title" class="input bg-[#ededed] w-[100%] mt-[20px]" type="text">
+                      <input v-model="newcameratitle_uz" placeholder="Uzbek title" class="input bg-[#ededed] w-[100%] mt-[20px]" type="text">
+                      <hr class="h-[2px] bg-[gray] mt-[30px]">
+                      <input v-model="addImage" placeholder="Image URL" class="input bg-[#ededed] w-[100%] my-[10px]" type="text">
+                      <figure class="h-[100px] w-[100px] bg-[gray] mb-[10px]">
+                        <img class="h-[100%] w-[100%] object-cover" :src="addImage" alt="image">
+                      </figure>
+                      <hr class="h-[2px] bg-[gray]">
+                      <div class="flex justify-between items-center">
+                        <p class="mt-[10px] text-[20px] font-[600]">characteristics:</p>
+                      <button @click="newCameraCharacters.push('')" class="btn mt-[10px] bg-[lime]">Add Character</button>
+                      </div>
+
+                      <fieldset class="border p-[10px] mt-[20px]">
+                        <legend>Persian</legend>
+                        <input required v-for="item of newCameraCharacters" :key="item.id" placeholder="characteristics" class="titlepr input bg-[#ededed] w-[100%] my-[10px]" type="text">
+                      </fieldset>
+                      <fieldset class="border p-[10px] mt-[20px]">
+                        <legend>English</legend>
+                        <input required v-for="item of newCameraCharacters" :key="item.id" placeholder="characteristics" class="titleen input bg-[#ededed] w-[100%] my-[10px]" type="text">
+                      </fieldset>
+                      <fieldset class="border p-[10px] mt-[20px]">
+                        <legend>Russian</legend>
+                        <input required v-for="item of newCameraCharacters" :key="item.id" placeholder="characteristics" class="titleru input bg-[#ededed] w-[100%] my-[10px]" type="text">
+                      </fieldset>
+                      <fieldset class="border p-[10px] mt-[20px]">
+                        <legend>Uzbek</legend>
+                        <input required v-for="item of newCameraCharacters" :key="item.id" placeholder="characteristics" class="titleuz input bg-[#ededed] w-[100%] my-[10px]" type="text">
+                      </fieldset>
+                      <div class="modal-action">
+                        <form method="dialog">
+                          <!-- if there is a button in form, it will close the modal -->
+                          <button class="btn mr-[5px]">Close</button>
+                          <button @click="AddSwitches()" class="btn btn-primary">Save</button>
+                        </form>
+                      </div>
+                    </div>
+                  </dialog>
+
+                  <table class="table">
+                    <!-- head -->
+                    <thead>
+                      <tr>
+
+                        <th>Name</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <!-- row 1 -->
+                      <tr v-for="item of switches" :key="item.id">
+                        <td @click="eventProd = item" onclick="my_modal_11.showModal()" >
+                          <div class="flex items-center gap-3">
+                            <div class="avatar">
+                              <div class="mask mask-squircle h-12 w-12">
+                                <img :src="item.img" alt="img" />
+                              </div>
+                            </div>
+                            <div>
+                              <div class="font-bold">{{ item.en }}</div>
+                            </div>
+                          </div>
+                        </td>
+                        <td><div @click="switches.splice(switches.indexOf(item),1)" class="btn bg-[red] pointer-events-auto text-white border-none">Del</div></td>
+                      </tr>
+                      <dialog id="my_modal_11" class="modal">
+                          <div class="modal-box h-[100vh] overflow-y-auto">
+                            <div class="modal-action">
+                              <form method="dialog">
+                                <!-- if there is a button in form, it will close the modal -->
+                                <button class="btn">Close</button>
+                              </form>
+                            </div>
+                            <h3 class="text-lg font-bold border-b"><span>Title in Persian:</span> <br> {{eventProd.pr}}</h3>
+                            <h3 class="text-lg font-bold border-b"><span>Title in English:</span> <br> {{eventProd.en}}</h3>
+                            <h3 class="text-lg font-bold border-b"><span>Title in Russian:</span> <br> {{eventProd.ru}}</h3>
+                            <h3 class="text-lg font-bold border-b">Title in Uzbek: <br> {{eventProd.uz}}</h3>
+                            <img :src="eventProd.img" alt="image">
+                            <p class="text-[20px] font-[1000] mb-[5px]">characters Persian:</p>
+                            <p v-for="item of eventProd.optionspr" :key="item.id">{{ item }}</p>
+                            <div class="h-[10px] bg-[gray] my-[10px]"></div>
+
+                            <p class="text-[20px] font-[1000] mb-[5px]">characters English:</p>
+                            <p v-for="item of eventProd.optionsen" :key="item.id">{{ item }}</p>
+                            <div class="h-[10px] bg-[gray] my-[10px]"></div>
+
+                            <p class="text-[20px] font-[1000] mb-[5px]">characters Russian:</p>
+                            <p v-for="item of eventProd.optionsru" :key="item.id">{{ item }}</p>
+                            <div class="h-[10px] bg-[gray] my-[10px]"></div>
+
+                            <p class="text-[20px] font-[1000] mb-[5px]">characters Uzbek:</p>
+                            <p v-for="item of eventProd.optionsuz" :key="item.id">{{ item }}</p>
+                            <div class="h-[10px] bg-[gray] my-[10px]"></div>
+                          </div>
+                        </dialog>
+
+                    </tbody>
+                  </table>
+                </div>
+
+
+              </div>
+            </div>
+            <br>
+            <button @click="savecameras(), event = ''" class="btn bg-[blue] border-[blue] text-white">SAVE <span
+                v-if="loader" class="loading loading-spinner loading-xs"></span></button>
           </div>
 
         </div>
+
       </div>
     </div>
 
@@ -111,12 +371,24 @@
 import { query, collection, getDocs, orderBy, updateDoc, doc, setDoc, deleteDoc } from "firebase/firestore";
 import { db } from "../firebase.ts"
 import { ref } from "vue"
+import router from "@/router";
+
+let login = prompt('Login')
+let password = prompt('Password')
+
+if(login == '@fidarnetwork@' && password == '@fidar@admin'){
+  alert("Welcome")
+}else{
+  router.push('/')
+}
 
 
-
+const eventProd = ref({})
+const loader = ref(false)
 const event = ref('')
+const newCameraCharacters = ref([''])
 
-// about 
+// about // about // about // about // about // about // about 
 const textru = ref('')
 const textpr = ref('')
 const textuz = ref('')
@@ -125,7 +397,6 @@ const titleru = ref('')
 const titleuz = ref('')
 const titlepr = ref('')
 const titleen = ref('')
-
 
 async function AboutGet() {
   let a = ref([])
@@ -145,6 +416,7 @@ async function AboutGet() {
   texten.value = a.value[0].en.text
 }
 async function saveAbout() {
+  loader.value = true
   await deleteDoc(doc(db, "fidar", "about"))
   await setDoc(doc(db, "fidar", "about"), {
     ru: {
@@ -152,8 +424,8 @@ async function saveAbout() {
       text: textru.value
     },
     pr: {
-      title: JSON.stringify(titlepr.value),
-      text: JSON.stringify(textpr.value)
+      title: titlepr.value,
+      text: textpr.value
     },
     uz: {
       title: titleuz.value,
@@ -164,12 +436,24 @@ async function saveAbout() {
       text: texten.value
     },
   });
-  alert('saved')
+  loader.value = false
+  event.value = ''
 }
-// about 
+// about // about // about // about // about // about // about 
 
-// gallery 
+// gallery // gallery // gallery // gallery // gallery // gallery 
+
+
+const newcameratitle_pr = ref('')
+const newcameratitle_en = ref('')
+const newcameratitle_ru = ref('')
+const newcameratitle_uz = ref('')
 const countOfGallery = ref([])
+const addImage = ref('')
+
+
+const cameras = ref([])
+const switches = ref([])
 
 const titleGallerypr = ref('')
 const titleGalleryen = ref('')
@@ -177,12 +461,13 @@ const titleGalleryru = ref('')
 const titleGalleryuz = ref('')
 
 async function saveGallery() {
+  loader.value = true
   let gallery = ref([])
   let inputsgallery = document.querySelectorAll('.inputsgallery')
-  for(let i of inputsgallery){
+  for (let i of inputsgallery) {
     gallery.value.push(i.value)
   }
-  
+
   await deleteDoc(doc(db, "fidar", "gallery"))
   await setDoc(doc(db, "fidar", "gallery"), {
     pr: titleGallerypr.value,
@@ -191,7 +476,8 @@ async function saveGallery() {
     uz: titleGalleryuz.value,
     gallery: gallery.value
   });
-  alert('saved')
+  loader.value = false
+  event.value = ''
 }
 
 async function galleryGet() {
@@ -210,7 +496,118 @@ async function galleryGet() {
   titleGalleryuz.value = a.value[1].uz
 
 }
-// gallery 
+// gallery // gallery // gallery // gallery // gallery // gallery 
+
+
+// cameras // cameras // cameras // cameras // cameras // cameras
+
+function AddSwitches(){
+  let title_pr = document.querySelectorAll('.titlepr')
+  let title_en = document.querySelectorAll('.titleen')
+  let title_ru = document.querySelectorAll('.titleru')
+  let title_uz = document.querySelectorAll('.titleuz')
+  
+  let optionspr = []
+  let optionsen = []
+  let optionsru = []
+  let optionsuz = []
+  
+  for(let i of title_pr) optionspr.push(i.value)
+  for(let i of title_en) optionsen.push(i.value)
+  for(let i of title_ru) optionsru.push(i.value)
+  for(let i of title_uz) optionsuz.push(i.value)
+
+  let obj = {
+    pr: newcameratitle_pr.value,
+    en: newcameratitle_en.value,
+    ru: newcameratitle_ru.value,
+    uz: newcameratitle_uz.value,
+    img: addImage,
+    optionspr: optionspr,
+    optionsen: optionsen,
+    optionsru: optionsru,
+    optionsuz: optionsuz,
+  }
+
+  switches.value.push(obj)
+  newcameratitle_pr.value = ''
+  newcameratitle_en.value = ''
+  newcameratitle_ru.value = ''
+  newcameratitle_uz.value = ''
+  newCameraCharacters.value = ['']
+  
+}
+function AddCamera(){
+  let title_pr = document.querySelectorAll('.titlepr')
+  let title_en = document.querySelectorAll('.titleen')
+  let title_ru = document.querySelectorAll('.titleru')
+  let title_uz = document.querySelectorAll('.titleuz')
+  
+  let optionspr = []
+  let optionsen = []
+  let optionsru = []
+  let optionsuz = []
+  
+  for(let i of title_pr) optionspr.push(i.value)
+  for(let i of title_en) optionsen.push(i.value)
+  for(let i of title_ru) optionsru.push(i.value)
+  for(let i of title_uz) optionsuz.push(i.value)
+
+  let obj = {
+    pr: newcameratitle_pr.value,
+    en: newcameratitle_en.value,
+    ru: newcameratitle_ru.value,
+    uz: newcameratitle_uz.value,
+    img: addImage,
+    optionspr: optionspr,
+    optionsen: optionsen,
+    optionsru: optionsru,
+    optionsuz: optionsuz,
+  }
+
+  cameras.value.push(obj)
+  newcameratitle_pr.value = ''
+  newcameratitle_en.value = ''
+  newcameratitle_ru.value = ''
+  newcameratitle_uz.value = ''
+  newCameraCharacters.value = ['']
+  
+}
+
+async function getcameras() {
+  let a = ref([])
+  const q = query(collection(db, "fidar"))
+  const querySnap = await getDocs(q);
+  querySnap.forEach((doc) => {
+    a.value.push(doc.data())
+  })
+  cameras.value = a.value[2].prods
+}
+
+async function getswitches() {
+  let a = ref([])
+  const q = query(collection(db, "fidar"))
+  const querySnap = await getDocs(q);
+  querySnap.forEach((doc) => {
+    a.value.push(doc.data())
+  })
+  switches.value = a.value[3].prods
+}
+
+
+async function savecameras() {
+  loader.value = true
+  console.log(cameras.value)
+  await deleteDoc(doc(db, "fidar", "product_cameras"))
+  await setDoc(doc(db, "fidar", "product_cameras"), {
+    prods: cameras.value
+  });
+
+  loader.value = false
+  event.value = ''
+}
+
+// cameras // cameras // cameras // cameras // cameras // cameras
 
 
 </script>

@@ -80,8 +80,6 @@ export default defineComponent({
         a.value.push(doc.data())
       })
       // about 
-      console.log(a.value);
-      
       this.useLangStore.ru.aboutBtn = a.value[0].ru.title
       this.useLangStore.pr.aboutBtn = a.value[0].pr.title
       this.useLangStore.uz.aboutBtn = a.value[0].uz.title
@@ -90,6 +88,12 @@ export default defineComponent({
       this.useLangStore.uz.about = a.value[0].uz.text
       this.useLangStore.en.about = a.value[0].en.text
       this.useLangStore.pr.about = a.value[0].pr.text
+
+      // gallery
+      this.useLangStore.ru.gallery = a.value[1].ru
+      this.useLangStore.pr.gallery = a.value[1].pr
+      this.useLangStore.uz.gallery = a.value[1].uz
+      this.useLangStore.en.gallery = a.value[1].en
    
       
       

@@ -5,7 +5,7 @@
 <template>
     <div class="max-w-[80%] w-[100%] h-[100%] flex items-center justify-around flex-col">
         <div></div>
-        <figure class="h-[90px] w-[200px]">
+        <figure class="h-[90px] w-[200px] bg-white rounded-[10px]">
             <img src="../assets/logoke.png" alt="image">
         </figure>
         <div class="w-[100%]">
